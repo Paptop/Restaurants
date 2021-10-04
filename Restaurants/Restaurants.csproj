@@ -4,4 +4,15 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Pages\Restaurants\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\Restaurants\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Restaurants.Persistence\Restaurants.Persistence.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
