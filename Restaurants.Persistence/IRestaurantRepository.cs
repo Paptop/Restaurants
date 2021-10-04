@@ -11,6 +11,7 @@ namespace Restaurants.Persistence
         IEnumerable<Restaurant> GetRestaurantsByName(string name);
         Restaurant GetById(int id);
         Restaurant Update(Restaurant updatedRestaurant);
+        Restaurant Create(Restaurant newRestaurant);
         int SaveChanges();
     }
 }

@@ -11,6 +11,8 @@ namespace Restaurants.Pages.Restaurants
 {
     public class DetailModel : PageModel
     {
+        [TempData]
+        public string Message { get; set; }
         public Restaurant RestaurantData { get; set; }
 
         private IRestaurantRepository _restaurantRepo;

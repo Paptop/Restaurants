@@ -26,10 +26,18 @@ namespace Restaurants.Pages.Restaurants
             _htmlHelper = htmlHelper;
         }
 
-        public IActionResult OnGet(int restaurantId)
+        public IActionResult OnGet(int? restaurantId)
         {
             Cuisines = _htmlHelper.GetEnumSelectList<CuisineType>();
-            RestaurantData = _restaurantRepo.GetById(restaurantId);
+
+            if(restaurantId.HasValue)
+            {
+                RestaurantData = _restaurantRepo.GetById(restaurantId.Value);
+            }
+            else
+            {
+                RestaurantData = new Restaurant();
+            }
 
             if (RestaurantData == null)
             {
@@ -41,9 +49,24 @@ namespace Restaurants.Pages.Restaurants
         public IActionResult OnPost()
         {
             Cuisines = _htmlHelper.GetEnumSelectList<CuisineType>();
-            RestaurantData = _restaurantRepo.Update(RestaurantData);
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            if(RestaurantData.Id > 0)
+            {
+                RestaurantData = _restaurantRepo.Update(RestaurantData);
+            }
+            else
+            {
+                RestaurantData = _restaurantRepo.Create(RestaurantData);
+            }
+
             _restaurantRepo.SaveChanges();
-            return Page();
+            TempData["Message"] = "Restaurant saved!";
+            return RedirectToPage("./Detail", new { restaurantId = RestaurantData.Id }); ;
         }
     }
 }
