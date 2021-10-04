@@ -16,15 +16,19 @@ namespace Restaurants.Pages.Restaurants
         //Model
         public IEnumerable<Restaurant> Restaurants { get; set; }
 
+        //Automatic data binding
+        [BindProperty(SupportsGet =true)]
+        public string SearchTerm { get; set; }
+
         public ListModel(IRestaurantRepository data)
         {
             _restaurantRepo = data;
         }
 
-        public void OnGet(string searchTerm)
+        public void OnGet()
         {
-            Restaurants = searchTerm == null ? _restaurantRepo.GetAll() :
-                          _restaurantRepo.GetRestaurantsByName(searchTerm);
+            Restaurants = SearchTerm == null ? _restaurantRepo.GetAll() :
+                          _restaurantRepo.GetRestaurantsByName(SearchTerm);
         }
     }
 }
