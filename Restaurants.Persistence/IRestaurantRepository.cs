@@ -10,5 +10,7 @@ namespace Restaurants.Persistence
         IEnumerable<Restaurant> GetAll();
         IEnumerable<Restaurant> GetRestaurantsByName(string name);
         Restaurant GetById(int id);
+        Restaurant Update(Restaurant updatedRestaurant);
+        int SaveChanges();
     }
 }

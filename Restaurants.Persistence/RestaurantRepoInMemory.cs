@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using Restaurants.Domain;
+using System;
 
 namespace Restaurants.Persistence
 {
@@ -39,6 +40,24 @@ namespace Restaurants.Persistence
                    where string.IsNullOrEmpty(name) || r.Name.StartsWith(name)
                    orderby r.Name
                    select r;
+        }
+
+        public int SaveChanges()
+        {
+            //InMemory database
+            return 0;
+        }
+
+        public Restaurant Update(Restaurant updatedRestaurant)
+        {
+            var restaurant = GetById(updatedRestaurant.Id) ?? throw new ArgumentException();
+
+            //TODO: move to separate method
+            restaurant.Cuisine = updatedRestaurant.Cuisine;
+            restaurant.Location = updatedRestaurant.Location;
+            restaurant.Name = updatedRestaurant.Name;
+
+            return restaurant;
         }
     }
 }
