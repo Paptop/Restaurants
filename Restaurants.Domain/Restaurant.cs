@@ -9,6 +9,8 @@ namespace Restaurants.Domain
         public string Name { get; set; }
         [Required, StringLength(255)]
         public string Location { get; set; }
+        [StringLength(800)]
+        public string Description { get; set; }
         public CuisineType Cuisine { get; set; }
     }
 }

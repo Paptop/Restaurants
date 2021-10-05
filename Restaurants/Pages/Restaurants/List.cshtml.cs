@@ -30,5 +30,18 @@ namespace Restaurants.Pages.Restaurants
             Restaurants = SearchTerm == null ? _restaurantRepo.GetAll() :
                           _restaurantRepo.GetRestaurantsByName(SearchTerm);
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int restaurantId)
+        {
+            /*
+            Restaurant res = null;
+            if (!_restaurantRepo.TryGetById(restaurantId, ref res))
+            {
+                return;
+            }*/
+            //_restaurantRepo.Delete(res);
+            TempData["Title"] = _restaurantRepo.GetById(restaurantId).Name;
+            return Page();
+        }
     }
 }

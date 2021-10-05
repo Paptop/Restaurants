@@ -5,20 +5,27 @@
     ViewData["Title"] = "Detail";
 }
 
-<h2>@Model.RestaurantData.Name</h2>
-<div>
-    Id: @Model.RestaurantData.Id
-</div>
-<div>
-    Location: @Model.RestaurantData.Location
-</div>
-<div>
-    Cuisine: @Model.RestaurantData.Cuisine
-</div>
+<h2>Details</h2>
+<dl class="row">
+    <dt class="col-sm-3">Restaurant ID:</dt>
+    <dd class="col-sm-9">@Model.RestaurantData.Id</dd>
 
-@if(Model.Message != null)
+    <dt class="col-sm-3">Name of the restaurant:</dt>
+    <dd class="col-sm-9">@Model.RestaurantData.Name</dd>
+
+    <dt class="col-sm-3">Location:</dt>
+    <dd class="col-sm-9">@Model.RestaurantData.Location</dd>
+
+    <dt class="col-sm-3">Cuisine:</dt>
+    <dd class="col-sm-9">@Model.RestaurantData.Cuisine</dd>
+
+    <dt class="col-sm-3">Description:</dt>
+    <dd class="col-sm-9">@Model.RestaurantData.Description</dd>
+</dl>
+
+@if (Model.Message != null)
 {
     <div class="alert alert-info">@Model.Message</div>
 }
 
-<a asp-page="./List" class="btn btn-default">All Restaurants</a>
+<a asp-page="./List" class="btn btn-primary">Go Back</a>

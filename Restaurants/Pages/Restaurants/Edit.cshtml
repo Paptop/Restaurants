@@ -25,5 +25,10 @@
         </select>
         <span class="text-danger" asp-validation-for="RestaurantData.Cuisine"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="RestaurantData.Description"></label>
+        <textarea asp-for="RestaurantData.Description" class="form-control" rows="5"></textarea>
+        <span class="text-danger" asp-validation-for="RestaurantData.Description"></span>
+    </div>
     <button type="submit" class="btn btn-primary">Save</button>
 </form>

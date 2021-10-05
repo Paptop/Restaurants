@@ -3,13 +3,17 @@
 @{
 }
 
-<h1>Restaurants</h1>
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <h1>Places</h1>
+    </div>
+</div>
 
 <form method="get">
     <div class="form-group">
         <div class="input-group">
             <input type="search" class="form-control"
-                   asp-for="SearchTerm"/>
+                   asp-for="SearchTerm" />
             <span class="input-group-btn">
                 <button class="btn btn-default">
                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -19,25 +23,43 @@
     </div>
 </form>
 
-<table class="table">
-    @foreach(var restaurant in Model.Restaurants)
-    {
+<table class="table table-striped">
+    <thead class="thead-light">
         <tr>
-            <td>@restaurant.Name</td>
-            <td>@restaurant.Location</td>
-            <td>@restaurant.Cuisine</td>
-            <td>
-                <a class="btn btn-lg"
-                   asp-page="./Detail/" asp-route-restaurantId="@restaurant.Id">
-                    <i class="fas fa-info-circle"></i>
-                </a>
-                <a class="btn btn-lg"
-                   asp-page="./Edit" asp-route-restaurantId="@restaurant.Id">
-                    <i class="fas fa-edit"></i>
-                </a>
-            </td>
+            <th scope="col">Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Cuisine</th>
+            <th scope="col">Options</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var restaurant in Model.Restaurants)
+        {
+            <tr>
+                <td>@restaurant.Name</td>
+                <td>@restaurant.Location</td>
+                <td>@restaurant.Cuisine</td>
+                <td>
+                    <a class="btn btn-lg"
+                       asp-page="./Detail/" asp-route-restaurantId="@restaurant.Id">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                    <a class="btn btn-lg"
+                       asp-page="./Edit/" asp-route-restaurantId="@restaurant.Id">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="btn btn-lg"
+                       asp-page="./Delete" asp-route-restaurantId="@restaurant.Id">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
-<a asp-page="./Edit" class="btn btn-primary">Add New</a>
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <a asp-page="./Edit" class="btn btn-primary center-block">Add New</a>
+    </div>
+</div>
