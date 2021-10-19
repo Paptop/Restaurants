@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Domain;
 using Restaurants.Persistence;
@@ -44,7 +41,7 @@ namespace Restaurants.Controllers
                 return BadRequest();
             }
 
-            return Ok(result);
+            return new CreatedResult("",result);
         }
 
         [HttpPut]

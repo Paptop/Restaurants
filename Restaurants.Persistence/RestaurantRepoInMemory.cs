@@ -28,6 +28,11 @@ namespace Restaurants.Persistence
 
         public Restaurant Create(Restaurant newRestaurant)
         {
+            if(newRestaurant == null)
+            {
+                return null;
+            }
+
             newRestaurant.Id = restaurants.Max(r => r.Id) + 1;
             restaurants.Add(newRestaurant);
             return newRestaurant;
@@ -73,6 +78,11 @@ namespace Restaurants.Persistence
 
         public Restaurant Update(Restaurant updatedRestaurant)
         {
+            if(updatedRestaurant == null)
+            {
+                return null;
+            }
+
             Restaurant restaurant = null;
             if(!TryGetById(updatedRestaurant.Id, ref restaurant))
             {

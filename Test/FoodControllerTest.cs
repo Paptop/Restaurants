@@ -21,9 +21,9 @@ namespace Test
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(0)]
-        public void Test_Details(int id)
+        [InlineData(1, 200)]
+        [InlineData(0, 404)]
+        public void Test_Details(int id, int expectCode)
         {
             //Act
             var result = _controller.Details(id);
@@ -35,6 +35,7 @@ namespace Test
                 var notFound = result as StatusCodeResult;
                 Assert.NotNull(notFound);
                 Assert.Equal(StatusCodes.Status404NotFound, notFound.StatusCode);
+                Assert.Equal(notFound.StatusCode, expectCode);
             }
             else
             {
@@ -42,6 +43,7 @@ namespace Test
                 Assert.True(okResult is OkObjectResult);
                 Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
                 Assert.IsType<Restaurant>(okResult.Value);
+                Assert.Equal(okResult.StatusCode, expectCode);
 
                 //Check the id
                 var val = (Restaurant)okResult.Value;
@@ -71,20 +73,14 @@ namespace Test
             {
                 //normal
                 new Restaurant { Id=12, Name="Test", Location="TestLocation", Description="TestDescription", Cuisine=CuisineType.Italian },
-                StatusCodes.Status200OK
+                StatusCodes.Status201Created
             },
             new object[]
             {
                 //Empty name
-                new Restaurant { Id=12, Name="", Location="TestLocation", Description="TestDescription", Cuisine=CuisineType.Italian },
+                null,
                 StatusCodes.Status400BadRequest
-            },
-            new object[]
-            {
-                //No such cuisine
-                new Restaurant { Id=12, Name="", Location="TestLocation", Description="TestDescription", Cuisine=(CuisineType)(-1) },
-                StatusCodes.Status400BadRequest
-            },
+            }
         };
 
 
@@ -107,9 +103,9 @@ namespace Test
             else
             {
                 Assert.NotNull(okResult);
-                Assert.True(okResult is OkObjectResult);
+                Assert.True(okResult is CreatedResult);
 
-                Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+                Assert.Equal(StatusCodes.Status201Created, okResult.StatusCode);
                 Assert.Equal(expectedCode, okResult.StatusCode);
 
                 Assert.IsType<Restaurant>(okResult.Value);
@@ -123,28 +119,23 @@ namespace Test
         {
             new object[]
             {
+                //ProperUpdate
+                new Restaurant { Id=1, Name="UpdatedName", Location="TestLocation", Description="TestDescription", Cuisine=CuisineType.Italian },
+                StatusCodes.Status200OK
+            },
+            new object[]
+            {
                 //No such id
                 new Restaurant { Id=0, Name="Test", Location="TestLocation", Description="TestDescription", Cuisine=CuisineType.Italian },
                 StatusCodes.Status400BadRequest
             },
             new object[]
             {
-                //Empty name
-                new Restaurant { Id=12, Name="", Location="TestLocation", Description="TestDescription", Cuisine=CuisineType.Italian },
-                StatusCodes.Status400BadRequest
-            },
-            new object[]
-            {
-                //No such cuisine
-                new Restaurant { Id=12, Name="", Location="TestLocation", Description="TestDescription", Cuisine=(CuisineType)(-1) },
-                StatusCodes.Status400BadRequest
-            },
-            new object[]
-            {
                 //ProperUpdate
-                new Restaurant { Id=1, Name="UpdatedName", Location="TestLocation", Description="TestDescription", Cuisine=CuisineType.Italian },
-                StatusCodes.Status200OK
+                null,
+                StatusCodes.Status400BadRequest
             }
+
         };
 
         [Theory]
@@ -184,9 +175,9 @@ namespace Test
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(0)]
-        public void Test_Remove(int id)
+        [InlineData(1, 200)]
+        [InlineData(0, 404)]
+        public void Test_Remove(int id, int expectedCode)
         {
             //Act
             var result = _controller.Remove(id);
@@ -205,6 +196,8 @@ namespace Test
                 Assert.NotNull(notFound);
                 Assert.Equal(StatusCodes.Status404NotFound, notFound.StatusCode);
             }
+
+            Assert.Equal(resultStatus.StatusCode, expectedCode);
         }
     }
 }
