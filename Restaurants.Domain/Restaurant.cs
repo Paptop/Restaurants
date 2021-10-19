@@ -11,6 +11,7 @@ namespace Restaurants.Domain
         public string Location { get; set; }
         [StringLength(800)]
         public string Description { get; set; }
+        [EnumDataType(typeof(CuisineType), ErrorMessage = "Cuisine type value doesn't exist")]
         public CuisineType Cuisine { get; set; }
     }
 }

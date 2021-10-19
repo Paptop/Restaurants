@@ -28,8 +28,8 @@ namespace Restaurants.Persistence
 
         public Restaurant Create(Restaurant newRestaurant)
         {
-            restaurants.Add(newRestaurant);
             newRestaurant.Id = restaurants.Max(r => r.Id) + 1;
+            restaurants.Add(newRestaurant);
             return newRestaurant;
         }
 
@@ -73,7 +73,11 @@ namespace Restaurants.Persistence
 
         public Restaurant Update(Restaurant updatedRestaurant)
         {
-            var restaurant = GetById(updatedRestaurant.Id) ?? throw new ArgumentException();
+            Restaurant restaurant = null;
+            if(!TryGetById(updatedRestaurant.Id, ref restaurant))
+            {
+                return null;
+            }
 
             //TODO: move to separate method
             restaurant.Cuisine = updatedRestaurant.Cuisine;
