@@ -17,6 +17,7 @@ namespace Restaurants.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [ProducesResponseType(typeof(Restaurant),200)]
         public IActionResult Details(int id)
         {
             int vId = id;
